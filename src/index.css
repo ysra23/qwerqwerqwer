@@ -149,3 +149,15 @@
 .neon-glow {
   box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
 }
+
+.brutalist-card {
+  @apply border-2 border-primary bg-white shadow-[8px_8px_0px_0px_#0A192F] transition-all hover:shadow-[4px_4px_0px_0px_#0A192F] hover:translate-x-[4px] hover:translate-y-[4px];
+}
+
+.brutalist-button {
+  @apply border-2 border-primary font-bold transition-all shadow-[4px_4px_0px_0px_#0A192F] active:shadow-none active:translate-x-[4px] active:translate-y-[4px];
+}
+
+.brutalist-input {
+  @apply border-2 border-primary rounded-none h-14 bg-white focus:ring-0 focus:border-accent;
+}

@@ -58,6 +58,8 @@ const trialSchema = z.object({
 
 type TrialFormValues = z.infer<typeof trialSchema>;
 
+import { Features } from './components/Features';
+
 // --- Components ---
 
 const Navbar = () => {
@@ -81,12 +83,12 @@ const Navbar = () => {
     <header 
       id="navbar"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/80 backdrop-blur-md border-b border-slate-200 py-3' : 'bg-transparent py-5'
+        isScrolled ? 'bg-white border-b-2 border-primary py-3' : 'bg-transparent py-5'
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         <a href="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center group-hover:rotate-6 transition-transform">
+          <div className="w-10 h-10 bg-primary flex items-center justify-center group-hover:rotate-6 transition-transform border-2 border-accent">
             <Wifi className="text-accent w-6 h-6" />
           </div>
           <span className="text-2xl font-display font-bold tracking-tighter text-primary">OMADA</span>
@@ -98,13 +100,13 @@ const Navbar = () => {
             <a 
               key={link.name} 
               href={link.href} 
-              className="text-sm font-medium text-slate-600 hover:text-primary transition-colors"
+              className="text-sm font-bold uppercase tracking-widest text-slate-600 hover:text-primary transition-colors"
             >
               {link.name}
             </a>
           ))}
           <Button 
-            className="bg-primary hover:bg-slate-800 text-white rounded-full px-6 shadow-lg shadow-primary/20"
+            className="brutalist-button bg-accent hover:bg-cyan-400 text-primary rounded-none px-8"
             onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
           >
             Get Omada
@@ -119,32 +121,7 @@ const Navbar = () => {
           {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-b border-slate-100 overflow-hidden"
-          >
-            <div className="flex flex-col gap-4 p-6">
-              {navLinks.map((link) => (
-                <a 
-                  key={link.name} 
-                  href={link.href} 
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-lg font-medium text-slate-600"
-                >
-                  {link.name}
-                </a>
-              ))}
-              <Button className="w-full bg-primary text-white py-6 text-lg">Get Started</Button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Mobile Menu ... */}
     </header>
   );
 };
@@ -174,14 +151,13 @@ const Hero = () => {
     console.log("Lead captured:", data);
     toast.success("Welcome aboard! Redirecting to preview...");
     confetti();
-    // Simulate redirect
     setTimeout(() => {
       window.location.hash = "#dashboard-preview";
     }, 2000);
   };
 
   return (
-    <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+    <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-[#F1F5F9]">
       <ParticleBackground />
       <div className="container mx-auto px-6 text-center">
         <motion.div
@@ -189,17 +165,16 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs font-semibold mb-6">
-            <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
-            V4.2 AI OPTIMIZATIONS NOW LIVE
+          <div className="inline-flex items-center gap-2 px-4 py-1 border-2 border-primary bg-white text-primary text-xs font-bold uppercase mb-8 shadow-[4px_4px_0px_#0A192F]">
+            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+            AI Core v4.2 Deployment Active
           </div>
-          <h1 className="text-5xl md:text-7xl font-display font-bold text-primary mb-6 tracking-tight">
-            Enterprise WiFi That <br />
-            <span className="gradient-text">Just Works – Anywhere.</span>
+          <h1 className="text-5xl md:text-8xl font-display font-bold text-primary mb-8 tracking-tighter leading-[0.85]">
+            ENTERPRISE WIFI <br />
+            <span className="gradient-text italic">THAT JUST WORKS.</span>
           </h1>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Omada delivers AI-optimized, self-healing mesh WiFi for businesses. 
-            No controller hardware. 99.99% uptime SLA.
+          <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-12 font-medium">
+            Self-healing mesh WiFi. No controller hardware. <span className="text-primary font-bold">99.99% Uptime SLA</span> as standard.
           </p>
         </motion.div>
 
@@ -207,17 +182,17 @@ const Hero = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-col md:flex-row items-center justify-center gap-4 max-w-lg mx-auto"
+          className="flex flex-col md:flex-row items-center justify-center gap-4 max-w-2xl mx-auto"
         >
-          <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col md:flex-row gap-2">
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col md:flex-row gap-0">
             <div className="flex-1 relative">
               <Input 
                 {...register('email')}
                 placeholder="Enter business email" 
-                className={`h-14 rounded-full px-6 border-slate-200 bg-white/70 focus:ring-accent ${errors.email ? 'border-red-500' : ''}`}
+                className="brutalist-input border-r-0"
               />
               {errors.email && (
-                <span className="absolute -bottom-6 left-6 text-[10px] text-red-500 font-medium">
+                <span className="absolute -bottom-6 left-0 text-[10px] text-red-500 font-bold uppercase">
                   {errors.email.message}
                 </span>
               )}
@@ -225,47 +200,16 @@ const Hero = () => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button type="submit" className="h-14 rounded-full px-8 bg-primary hover:bg-slate-800 text-white text-base group">
-                    Launch Free Trial <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <Button type="submit" className="h-14 rounded-none px-10 bg-primary hover:bg-slate-800 text-white text-base font-bold flex gap-2 border-2 border-primary transition-all shadow-[4px_4px_0px_#00D2FF]">
+                    START TRIAL <ArrowRight size={20} />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent>
-                  <p>No credit card. Cancel anytime.</p>
+                <TooltipContent className="bg-primary text-white border-2 border-accent rounded-none">
+                  <p className="font-bold uppercase text-[10px] tracking-widest">No Card. Instant Setup.</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
           </form>
-        </motion.div>
-        
-        <button className="mt-8 text-slate-500 hover:text-primary font-medium flex items-center justify-center gap-2 mx-auto">
-          Talk to an Expert < ChevronRight size={18} />
-        </button>
-
-        {/* Global Stats */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="mt-24 pt-10 border-t border-slate-200/50"
-        >
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 opacity-60">
-            <div className="flex flex-col items-center gap-2">
-              <Award className="w-6 h-6" />
-              <span className="text-xs uppercase tracking-widest font-bold">Gartner Cool Vendor</span>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <span className="text-lg font-bold">4.9/5 G2</span>
-              <span className="text-xs uppercase tracking-widest font-bold">Top Performance</span>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <ShieldCheck className="w-6 h-6" />
-              <span className="text-xs uppercase tracking-widest font-bold">ISO 27001 Certified</span>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <Globe className="w-6 h-6" />
-              <span className="text-xs uppercase tracking-widest font-bold">Used in 40+ Countries</span>
-            </div>
-          </div>
         </motion.div>
       </div>
     </section>
@@ -456,71 +400,6 @@ const ROICalculator = () => {
               </div>
             </motion.div>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const FeaturesGrid = () => {
-  const features = [
-    {
-      title: "AI Spectrum Analysis",
-      desc: "Real-time scanning and auto-selection of the cleanest channels, even in high-interference cities.",
-      icon: Cpu,
-    },
-    {
-      title: "Zero-Touch Provisioning",
-      desc: "Deploy 100 devices in 10 minutes. Just scan QR codes and let the cloud handle the rest.",
-      icon: RefreshCcw,
-    },
-    {
-      title: "Self-Healing Cloud Dashboard",
-      desc: "Manage your entire network from a single pane of glass with 99.99% Guaranteed SLA.",
-      icon: Cloud,
-    },
-    {
-      title: "Guest Portal with Social Login",
-      desc: "Turn your WiFi into a marketing engine. Capture leads via Facebook, Google, or SMS.",
-      icon: Users,
-    },
-    {
-      title: "Band Steering + QoS",
-      desc: "Prioritize Critical POS and VoIP traffic. High-bandwidth users never lag your operations.",
-      icon: TrendingUp,
-    },
-    {
-      title: "Threat Intelligence",
-      desc: "Advanced Firewall with real-time blacklists updated every 15 minutes by our security labs.",
-      icon: Lock,
-    },
-  ];
-
-  return (
-    <section id="features" className="py-24 bg-slate-50">
-      <div className="container mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-primary mb-6">Built for the Modern Enterprise</h2>
-          <p className="text-slate-500 text-lg leading-relaxed">Omada isn't just a router—it's an intelligent core that powers your business continuity.</p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-white p-8 rounded-3xl border border-slate-100 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 transition-all group"
-            >
-              <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-accent transition-colors mb-6">
-                <feature.icon size={28} />
-              </div>
-              <h4 className="text-xl font-bold text-primary mb-3 leading-tight">{feature.title}</h4>
-              <p className="text-slate-500 leading-relaxed text-sm">{feature.desc}</p>
-            </motion.div>
-          ))}
         </div>
       </div>
     </section>
@@ -760,7 +639,7 @@ const Footer = () => {
 const LiveChat = () => {
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      <Button className="w-14 h-14 rounded-full bg-accent hover:bg-cyan-400 text-primary shadow-2xl p-0 flex items-center justify-center">
+      <Button className="w-14 h-14 rounded-none bg-accent hover:bg-cyan-400 text-primary shadow-[4px_4px_0_#0A192F] p-0 flex items-center justify-center border-2 border-primary">
         <MessageSquare size={24} />
       </Button>
     </div>
@@ -775,7 +654,7 @@ export default function App() {
         <Hero />
         <PASSection />
         <ROICalculator />
-        <FeaturesGrid />
+        <Features />
         <SocialProof />
         <Pricing />
       </main>
