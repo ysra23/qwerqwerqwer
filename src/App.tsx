@@ -197,18 +197,16 @@ const Hero = () => {
                 </span>
               )}
             </div>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button type="submit" className="h-14 rounded-none px-10 bg-primary hover:bg-slate-800 text-white text-base font-bold flex gap-2 border-2 border-primary transition-all shadow-[4px_4px_0px_#00D2FF]">
-                    START TRIAL <ArrowRight size={20} />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent className="bg-primary text-white border-2 border-accent rounded-none">
-                  <p className="font-bold uppercase text-[10px] tracking-widest">No Card. Instant Setup.</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button type="submit" className="h-14 rounded-none px-10 bg-primary hover:bg-slate-800 text-white text-base font-bold flex gap-2 border-2 border-primary transition-all shadow-[4px_4px_0px_#00D2FF]">
+                  START TRIAL <ArrowRight size={20} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className="bg-primary text-white border-2 border-accent rounded-none">
+                <p className="font-bold uppercase text-[10px] tracking-widest">No Card. Instant Setup.</p>
+              </TooltipContent>
+            </Tooltip>
           </form>
         </motion.div>
       </div>
@@ -648,19 +646,21 @@ const LiveChat = () => {
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-background selection:bg-accent/30 flex flex-col font-sans antialiased">
-      <Navbar />
-      <main className="flex-1">
-        <Hero />
-        <PASSection />
-        <ROICalculator />
-        <Features />
-        <SocialProof />
-        <Pricing />
-      </main>
-      <Footer />
-      <LiveChat />
-      <Toaster position="top-center" theme="light" />
-    </div>
+    <TooltipProvider>
+      <div className="min-h-screen bg-background selection:bg-accent/30 flex flex-col font-sans antialiased">
+        <Navbar />
+        <main className="flex-1">
+          <Hero />
+          <PASSection />
+          <ROICalculator />
+          <Features />
+          <SocialProof />
+          <Pricing />
+        </main>
+        <Footer />
+        <LiveChat />
+        <Toaster position="top-center" theme="light" />
+      </div>
+    </TooltipProvider>
   );
 }
